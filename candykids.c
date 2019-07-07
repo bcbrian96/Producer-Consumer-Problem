@@ -101,7 +101,7 @@ int main(int argc, char* argv[])
 	int factoryCount[numFactories];
 	
 	for(int i = 0; i < numFactories; i++){
-		//printf("Main here. Creating thread %d\n", i);
+		printf("Main here. Creating thread %d\n", i);
 		factoryCount[i] = i;
 		factoryStatus = pthread_create(&factory_tid[i], NULL, factoryThread, (void *)&factoryCount[i]);
 		
@@ -136,8 +136,10 @@ int main(int argc, char* argv[])
 	int joinStatus = 0;
 	stop_thread = true;
 	
+	printf("Stopping candy factories...\n");
+	
 	for(int i = 0; i < numFactories; i++){
-		pthread_join(factory_tid[i], NULL);
+		joinStatus = pthread_join(factory_tid[i], NULL);
 		
 		if (joinStatus != 0){
 			printf("Error joining thread.\n");
@@ -146,7 +148,33 @@ int main(int argc, char* argv[])
 	}
 	
 	// 7.  Wait until no more candy
+	while(!bbuff_is_empty()){
+		printf("Waiting for all candy to be consumed.\n");
+		sleep(1);
+	}
 	
+	// 8.  Stop kid threads
+	printf("Stopping kids...\n");
+	
+	for(int i = 0; i < numKids; i++){
+		
+		if (pthread_cancel(kid_tid[i]) != 0) {
+			printf("Error canceling thread.\n");
+			exit(-1);
+		}
+		
+		if (pthread_join(kid_tid[i], NULL) != 0) {
+			printf("Error joining thread.\n");
+			exit(-1);
+		}
+	}
+	
+	// 9.  Print statistics
+	
+	// 10. Cleanup any allocated memory
+	
+	//free(factory_tid);
+	//free(kid_tid);
 	
 	return 0;
 }
