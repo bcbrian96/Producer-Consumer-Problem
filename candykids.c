@@ -101,7 +101,7 @@ int main(int argc, char* argv[])
 	int factoryCount[numFactories];
 	
 	for(int i = 0; i < numFactories; i++){
-		printf("Main here. Creating thread %d\n", i);
+		//printf("Main here. Creating thread %d\n", i);
 		factoryCount[i] = i;
 		factoryStatus = pthread_create(&factory_tid[i], NULL, factoryThread, (void *)&factoryCount[i]);
 		
