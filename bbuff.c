@@ -32,7 +32,6 @@ void bbuff_blocking_insert(void* item)
 	buffer[index] = item;
 	index = (index+1) % BUFFER_SIZE;
 	
-	
 	sem_post(&mutex);
 	sem_post(&full);
 	
@@ -42,11 +41,6 @@ void* bbuff_blocking_extract(void)
 {
 	sem_wait(&full);
 	sem_wait(&mutex);
-	
-	//remove item from buffer
-	/* void* item = buffer[index-1];
-	buffer[index-1] = NULL;
-	index--; */
 	
 	void* item = buffer[out];
 	buffer[out] = NULL;
@@ -59,26 +53,8 @@ void* bbuff_blocking_extract(void)
 	
 }
 
-
-/* _Bool bbuff_is_empty(void)
-{
-	if(index == 0){
-		return true;
-	}
-	else{
-		return false;
-	}
-	
-} */
-
 _Bool bbuff_is_empty(void)
 {
-
 	sem_getvalue(&empty, &emptyVal);
-	if(emptyVal == 10){
-		return true;
-	}
-	return false;
-	
+	return emptyVal == 10;
 }
-

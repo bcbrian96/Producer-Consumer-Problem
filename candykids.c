@@ -65,6 +65,8 @@ void *kidThread(void *param) {
 		//if(candy == NULL){
 		//	printf("testing: candy_ptr is null.\n");
 		//}
+		free(candy);
+		candy = NULL;
 		sleep(waitSecond);
 	}
 	
@@ -91,9 +93,6 @@ int main(int argc, char* argv[])
 		printf("ERROR: Arguments must be greater than 0.\n");
 		exit(-1);
 	}
-	//printf("numFactories = %d\n", numFactories);
-	//printf("numKids = %d\n", numKids);
-	//printf("numSeconds = %d\n", numSeconds);
 	
 	// 2.  Initialize modules
 	bbuff_init();
@@ -134,7 +133,7 @@ int main(int argc, char* argv[])
 	
 	// 5.  Wait for requested time
 	for(int i = 0; i < numSeconds; i++){
-		printf("Time %ds:\n", i);
+		printf("Time%3ds:\n", i);
 		sleep(1);
 	}
 	
@@ -143,7 +142,7 @@ int main(int argc, char* argv[])
 	stop_thread = true;
 	
 	printf("Stopping candy factories...\n");
-	
+
 	for(int i = 0; i < numFactories; i++){
 		joinStatus = pthread_join(factory_tid[i], NULL);
 		
@@ -180,10 +179,6 @@ int main(int argc, char* argv[])
 	
 	// 10. Cleanup any allocated memory
 	stats_cleanup();
-	
-	//free(candy);
-	//candy = NULL;
-	
-	
+
 	return 0;
 }
