@@ -9,7 +9,7 @@ void* buffer[BUFFER_SIZE]; //buffer array
 sem_t mutex;
 sem_t full;
 sem_t empty;
-int index = 0;
+int index;
 
 
 //initialize bounded buffer module (constructor)
@@ -59,9 +59,6 @@ _Bool bbuff_is_empty(void)
 	if(index == 0){
 		return true;
 	}
-	else{
-		return false;
-	}
-	
+	return false;
 }
 

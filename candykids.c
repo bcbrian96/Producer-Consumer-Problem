@@ -50,7 +50,7 @@ _Bool stop_thread = false; //flag to end thread
 
 void *kidThread(void *param) {
 	
-	int kidCount = *(int*)param;
+	//int kidCount = *(int*)param;
 	int waitSecond = 0;
 	
 	while(true){
@@ -60,7 +60,7 @@ void *kidThread(void *param) {
 		candy_t* candy = (candy_t*)bbuff_blocking_extract();
 		stats_record_consumed(candy->factory_number, current_time_in_ms() - candy->time_stamp_in_ms);
 		
-		printf("\tKid %d eats candy & waits %ds\n", kidCount, waitSecond);
+		//printf("\tKid %d eats candy & waits %ds\n", kidCount, waitSecond);
 		
 		//if(candy == NULL){
 		//	printf("testing: candy_ptr is null.\n");
@@ -91,9 +91,9 @@ int main(int argc, char* argv[])
 		printf("ERROR: Arguments must be greater than 0.\n");
 		exit(-1);
 	}
-	printf("numFactories = %d\n", numFactories);
-	printf("numKids = %d\n", numKids);
-	printf("numSeconds = %d\n", numSeconds);
+	//printf("numFactories = %d\n", numFactories);
+	//printf("numKids = %d\n", numKids);
+	//printf("numSeconds = %d\n", numSeconds);
 	
 	// 2.  Initialize modules
 	bbuff_init();
@@ -107,7 +107,7 @@ int main(int argc, char* argv[])
 	int factoryCount[numFactories];
 	
 	for(int i = 0; i < numFactories; i++){
-		printf("Main here. Creating thread %d\n", i);
+		//printf("Main here. Creating thread %d\n", i);
 		factoryCount[i] = i;
 		factoryStatus = pthread_create(&factory_tid[i], NULL, factoryThread, (void *)&factoryCount[i]);
 		
@@ -124,7 +124,7 @@ int main(int argc, char* argv[])
 	
 	for (int i = 0; i < numKids; i++){
 		kidCount[i] = i;
-		kidStatus = pthread_create(&kid_tid[i], NULL, factoryThread, (void *)&kidCount[i]);
+		kidStatus = pthread_create(&kid_tid[i], NULL, kidThread, (void *)&kidCount[i]);
 	
 		if (kidStatus != 0){
 				printf("pthread_create returned error code.\n");
@@ -134,8 +134,8 @@ int main(int argc, char* argv[])
 	
 	// 5.  Wait for requested time
 	for(int i = 0; i < numSeconds; i++){
+		printf("Time %ds:\n", i);
 		sleep(1);
-		printf("Time %ds:\n", i+1);
 	}
 	
 	// 6.  Stop candy-factory threads
@@ -143,7 +143,7 @@ int main(int argc, char* argv[])
 	stop_thread = true;
 	
 	printf("Stopping candy factories...\n");
-	
+
 	for(int i = 0; i < numFactories; i++){
 		joinStatus = pthread_join(factory_tid[i], NULL);
 		
@@ -160,7 +160,7 @@ int main(int argc, char* argv[])
 	}
 	
 	// 8.  Stop kid threads
-	printf("Stopping kids...\n");
+	printf("Stopping kids.\n");
 	
 	for(int i = 0; i < numKids; i++){
 		
