@@ -91,9 +91,6 @@ int main(int argc, char* argv[])
 		printf("ERROR: Arguments must be greater than 0.\n");
 		exit(-1);
 	}
-	//printf("numFactories = %d\n", numFactories);
-	//printf("numKids = %d\n", numKids);
-	//printf("numSeconds = %d\n", numSeconds);
 	
 	// 2.  Initialize modules
 	bbuff_init();
@@ -180,10 +177,6 @@ int main(int argc, char* argv[])
 	
 	// 10. Cleanup any allocated memory
 	stats_cleanup();
-	
-	//free(candy);
-	//candy = NULL;
-	
 	
 	return 0;
 }

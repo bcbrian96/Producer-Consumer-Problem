@@ -10,7 +10,8 @@ sem_t mutex;
 sem_t full;
 sem_t empty;
 int index = 0;
-
+int out = 0;
+int emptyVal;
 
 //initialize bounded buffer module (constructor)
 void bbuff_init(void)
@@ -29,7 +30,7 @@ void bbuff_blocking_insert(void* item)
 	
 	//add item to buffer
 	buffer[index] = item;
-	index++;
+	index = (index+1) % BUFFER_SIZE;
 	
 	sem_post(&mutex);
 	sem_post(&full);
@@ -41,10 +42,9 @@ void* bbuff_blocking_extract(void)
 	sem_wait(&full);
 	sem_wait(&mutex);
 	
-	//remove item from buffer
-	index--;
-	void* item = buffer[index];
-	buffer[index] = NULL;
+	void* item = buffer[out];
+	buffer[out] = NULL;
+	out = (out + 1) % BUFFER_SIZE;
 	
 	sem_post(&mutex);
 	sem_post(&empty);
@@ -53,9 +53,10 @@ void* bbuff_blocking_extract(void)
 	
 }
 
-
 _Bool bbuff_is_empty(void)
 {
-	return index == 0;
-}
 
+	sem_getvalue(&empty, &emptyVal);
+	return emptyVal == 10;
+	
+}
