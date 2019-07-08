@@ -55,8 +55,6 @@ void* bbuff_blocking_extract(void)
 
 _Bool bbuff_is_empty(void)
 {
-
 	sem_getvalue(&empty, &emptyVal);
 	return emptyVal == 10;
-	
 }

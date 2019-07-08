@@ -72,12 +72,11 @@ void stats_record_consumed(int factory_number, double delay_in_ms)
 
 void stats_display(void)
 {
-	//printf("\n");
 	printf("Statistics:\n");
 	
-	printf("%8s%10s%10s%18s%18s%18s\n", "Factory#", "#Made", "#Eaten", "Min Delay [ms]", "Avg Delay [ms]", "Max Delay [ms]");
+	printf("%10s%10s%10s%18s%18s%18s\n", "Factory#", "#Made", "#Eaten", "Min Delay [ms]", "Avg Delay [ms]", "Max Delay [ms]");
 	for(int i = 0; i < num_factories; i++){
-		printf("%8d%10d%10d%18f%18f%18f\n", 
+		printf("%10d%10d%10d%18f%18f%18f\n", 
 		statsArray[i].factory_number,
 		statsArray[i].num_candies_created,
 		statsArray[i].num_candies_consumed,

@@ -65,6 +65,8 @@ void *kidThread(void *param) {
 		//if(candy == NULL){
 		//	printf("testing: candy_ptr is null.\n");
 		//}
+		free(candy);
+		candy = NULL;
 		sleep(waitSecond);
 	}
 	
@@ -131,7 +133,7 @@ int main(int argc, char* argv[])
 	
 	// 5.  Wait for requested time
 	for(int i = 0; i < numSeconds; i++){
-		printf("Time %ds:\n", i);
+		printf("Time%3ds:\n", i);
 		sleep(1);
 	}
 	
@@ -177,6 +179,6 @@ int main(int argc, char* argv[])
 	
 	// 10. Cleanup any allocated memory
 	stats_cleanup();
-	
+
 	return 0;
 }
