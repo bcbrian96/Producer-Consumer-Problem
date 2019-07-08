@@ -49,6 +49,7 @@ void* bbuff_blocking_extract(void)
 	index--; */
 	
 	void* item = buffer[out];
+	buffer[out] = NULL;
 	out = (out + 1) % BUFFER_SIZE;
 	
 	sem_post(&mutex);
