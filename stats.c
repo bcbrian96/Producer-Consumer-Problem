@@ -1,7 +1,6 @@
 #include "stats.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <semaphore.h>
 #include <stdbool.h>
 
 typedef struct  { 
@@ -32,6 +31,7 @@ void stats_init(int num_producers)
 		statsArray[i].avg_delay = -1;
 		statsArray[i].total_delay = 0;
 	}
+	
 }
 
 void stats_cleanup(void)
@@ -43,10 +43,12 @@ void stats_cleanup(void)
 void stats_record_produced(int factory_number)
 {
 	statsArray[factory_number].num_candies_created++;
+
 }
 
 void stats_record_consumed(int factory_number, double delay_in_ms)
 {
+	
 	statsArray[factory_number].num_candies_consumed++;
 	
 	if(statsArray[factory_number].min_delay == -1){
@@ -68,6 +70,7 @@ void stats_record_consumed(int factory_number, double delay_in_ms)
 		statsArray[factory_number].total_delay = statsArray[factory_number].total_delay + delay_in_ms;
 		statsArray[factory_number].avg_delay = statsArray[factory_number].total_delay / (double)statsArray[factory_number].num_candies_consumed;
 	}
+	
 }
 
 void stats_display(void)
