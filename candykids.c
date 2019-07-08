@@ -37,6 +37,8 @@ _Bool stop_thread = false; //flag to end thread
 	candy->time_stamp_in_ms = current_time_in_ms();
 	
 	bbuff_blocking_insert(candy);
+	stats_record_produced(factoryCount);
+	
 	sleep(waitSecond);
 
 	}
@@ -56,11 +58,13 @@ void *kidThread(void *param) {
 		waitSecond = (rand() % (1 + 1));	
 		
 		candy_t* candy = (candy_t*)bbuff_blocking_extract();
+		stats_record_consumed(candy->factory_number, current_time_in_ms() - candy->time_stamp_in_ms);
+		
 		printf("\tKid %d eats candy & waits %ds\n", kidCount, waitSecond);
 		
-		if(candy == NULL){
-			printf("testing: candy_ptr is null.\n");
-		}
+		//if(candy == NULL){
+		//	printf("testing: candy_ptr is null.\n");
+		//}
 		sleep(waitSecond);
 	}
 	
@@ -172,8 +176,10 @@ int main(int argc, char* argv[])
 	}
 	
 	// 9.  Print statistics
+	stats_display();
 	
 	// 10. Cleanup any allocated memory
+	stats_cleanup();
 	
 	//free(candy);
 	//candy = NULL;
