@@ -8,8 +8,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#include "bbuff.h"
 #include "stats.h"
+#include "bbuff.h"
 
 #define NUM_ARGS 3
 
@@ -93,6 +93,7 @@ int main(int argc, char* argv[])
 	
 	// 2.  Initialize modules
 	bbuff_init();
+	stats_init(numFactories);
 	
 	srand(time(NULL));
 	
@@ -130,7 +131,7 @@ int main(int argc, char* argv[])
 	// 5.  Wait for requested time
 	for(int i = 0; i < numSeconds; i++){
 		sleep(1);
-		printf("Time %ds:\n", i);
+		printf("Time %ds:\n", i+1);
 	}
 	
 	// 6.  Stop candy-factory threads
