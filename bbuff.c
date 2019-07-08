@@ -4,7 +4,6 @@
 #include <semaphore.h>
 #include <stdbool.h>
 
-
 void* buffer[BUFFER_SIZE]; //buffer array
 
 sem_t mutex;

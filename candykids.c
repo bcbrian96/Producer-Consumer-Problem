@@ -9,6 +9,7 @@
 #include <sys/wait.h>
 
 #include "bbuff.h"
+#include "stats.h"
 
 #define NUM_ARGS 3
 
@@ -173,8 +174,9 @@ int main(int argc, char* argv[])
 	
 	// 10. Cleanup any allocated memory
 	
-	//free(factory_tid);
-	//free(kid_tid);
+	//free(candy);
+	//candy = NULL;
+	
 	
 	return 0;
 }
