@@ -86,6 +86,10 @@ void stats_display(void)
 		statsArray[i].min_delay,
 		statsArray[i].avg_delay,
 		statsArray[i].max_delay);
+
+		if(statsArray[i].num_candies_created != statsArray[i].num_candies_consumed){
+			printf("ERROR: Mismatch between number made and eaten.\n");
+		}
 	}
 	
 }
