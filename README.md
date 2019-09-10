@@ -1,11 +1,7 @@
-Project 3: Candy Kids
+Project: Candy Kids
 
 CMPT 300 D100: Operating Systems I
-Instructor: Arrvindh Shriraman
 
-Group Mu
-Brian Lee 301250913 bblee@sfu.ca
-SeongJin Kim 301258579 ska158@sfu.ca
 
 This project contains the following files:
 
